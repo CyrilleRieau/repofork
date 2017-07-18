@@ -66,7 +66,7 @@ and open the template in the editor.
                 }
                 ?>
                 <section class="col-sm-8 col-md-8 col-lg-8">
-                    <?php foreach (Database::recupContent($unserpost) as $unsercomt) {
+                    <?php foreach ($db->recupContent($unserpost) as $unsercomt) {
                         ?>
                         <section class="col-sm-4 col-md-4 col-lg-4" id="<?php echo $unsercomt->getDate()->format('d-m-Y H:i:s'); ?>">
                             <?php

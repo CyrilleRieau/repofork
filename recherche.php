@@ -11,8 +11,8 @@ and open the template in the editor.
         <title>Recherche</title>
     </head>
     <body>
-        <?php        include_once 'header.php';
-
+        <?php
+        include_once 'header.php';
 
         if (!isset($_POST['pseudorec']) && (!isset($_POST['pseudorec']))) {
             echo 'Pas de champs remplis';
@@ -39,7 +39,7 @@ and open the template in the editor.
             }
         }
         if ($_POST['disciplinerec'] != "" && $_POST['pseudorec'] == "" && $_POST['tagsrec'] == "") {
-            foreach (Database::recupPost() as $unserpost) {
+            foreach ($db->recupPost() as $unserpost) {
                 if ($_POST['disciplinerec'] === $unserpost->getDiscipline()) {
                     ?>
                     <section class="<?php echo $unserpost->getTitre() ?>">
@@ -52,7 +52,7 @@ and open the template in the editor.
             }
         }
         if ($_POST['tagsrec'] != "" && $_POST['pseudorec'] == "" && $_POST['disciplinerec'] == "") {
-            foreach (Database::recupPost() as $unserpost) {
+            foreach ($db->recupPost() as $unserpost) {
                 if ($_POST['tagsrec'] === $unserpost->getTags()) {
                     ?>
                     <section class="<?php echo $unserpost->getTitre() ?>">
@@ -65,14 +65,13 @@ and open the template in the editor.
             }
         }
         if ($_POST['tagsrec'] != "" && $_POST['pseudorec'] != "" && $_POST['disciplinerec'] == "") {
-            foreach (Database::recupPost() as $unserpost) {
+            foreach ($db->recupPost() as $unserpost) {
                 if ($_POST['tagsrec'] === $unserpost->getTags() && is_dir('./posts/' . $_POST['pseudorec'])) {
                     $posts = scandir('./posts/' . $_POST['pseudorec']);
                     foreach ($posts as $post) {
                         if (is_file('./posts/' . $_POST['pseudorec'] . '/' . $post)) {
                             $datas = file_get_contents('./posts/' . $_POST['pseudorec'] . '/' . $post);
-                            $unserpost = unserialize($datas);
-                            {
+                            $unserpost = unserialize($datas); {
                                 ?>
                                 <section class="<?php echo $unserpost->getTitre() ?>">
                                     <a href=" postliste.php?id=<?php echo base64_encode(serialize($unserpost)) ?>"><h1><?php echo $unserpost->getTitre() ?></h1></a>
@@ -87,63 +86,61 @@ and open the template in the editor.
             }
         }
         if ($_POST['tagsrec'] == "" && $_POST['pseudorec'] != "" && $_POST['disciplinerec'] != "") {
-            foreach (Database::recupPost() as $unserpost) {
+            foreach ($db->recupPost() as $unserpost) {
                 if ($_POST['disciplinerec'] === $unserpost->getDiscipline() && is_dir('./posts/' . $_POST['pseudorec'])) {
                     $posts = scandir('./posts/' . $_POST['pseudorec']);
                     foreach ($posts as $post) {
                         if (is_file('./posts/' . $_POST['pseudorec'] . '/' . $post)) {
                             $datas = file_get_contents('./posts/' . $_POST['pseudorec'] . '/' . $post);
-                            $unserpost = unserialize($datas);
-                            {
+                            $unserpost = unserialize($datas); {
                                 ?>
                                 <section class="<?php echo $unserpost->getTitre() ?>">
                                     <a href=" postliste.php?id=<?php echo base64_encode(serialize($unserpost)) ?>"><h1><?php echo $unserpost->getTitre() ?></h1></a>
                                     <h2><?php echo $unserpost->getAuteur() ?></h2>
                                     <p><?php echo $unserpost->getContenu() ?></p>
                                     <p><?php echo $unserpost->getDiscipline() ?></p></section>
-                                <?php
-                            }
-                        }
+                        <?php
                     }
                 }
             }
         }
-        if ($_POST['tagsrec'] == "" && $_POST['pseudorec'] != "" && $_POST['disciplinerec'] == "") {
-            foreach (Database::recupPost() as $unserpost) {
-                if ($_POST['tagsrec'] === $unserpost->getTags() && $_POST['disciplinerec'] === $unserpost->getDiscipline()) {
-                    ?>
+    }
+}
+if ($_POST['tagsrec'] == "" && $_POST['pseudorec'] != "" && $_POST['disciplinerec'] == "") {
+    foreach ($db->recupPost() as $unserpost) {
+        if ($_POST['tagsrec'] === $unserpost->getTags() && $_POST['disciplinerec'] === $unserpost->getDiscipline()) {
+            ?>
                     <section class="<?php echo $unserpost->getTitre() ?>">
                         <a href=" postliste.php?id=<?php echo base64_encode(serialize($unserpost)) ?>"><h1><?php echo $unserpost->getTitre() ?></h1></a>
                         <h2><?php echo $unserpost->getAuteur() ?></h2>
                         <p><?php echo $unserpost->getContenu() ?></p>
                         <p><?php echo $unserpost->getDiscipline() ?></p></section>
-                    <?php
-                }
-            }
+            <?php
         }
-        if ($_POST['tagsrec'] != "" && $_POST['pseudorec'] != "" && $_POST['disciplinerec'] != "") {
-            foreach (Database::recupPost() as $unserpost) {
-                if ($_POST['disciplinerec'] == $unserpost->getDiscipline() && $_POST['tagsrec'] == $unserpost->getTags() && is_dir('./posts/' . $_POST['pseudorec'])) {
-                    $posts = scandir('./posts/' . $_POST['pseudorec']);
-                    foreach ($posts as $post) {
-                        if (is_file('./posts/' . $_POST['pseudorec'] . '/' . $post)) {
-                            $datas = file_get_contents('./posts/' . $_POST['pseudorec'] . '/' . $post);
-                            $unserpost = unserialize($datas);
-                            {
-                                ?>
+    }
+}
+if ($_POST['tagsrec'] != "" && $_POST['pseudorec'] != "" && $_POST['disciplinerec'] != "") {
+    foreach ($db->recupPost() as $unserpost) {
+        if ($_POST['disciplinerec'] == $unserpost->getDiscipline() && $_POST['tagsrec'] == $unserpost->getTags() && is_dir('./posts/' . $_POST['pseudorec'])) {
+            $posts = scandir('./posts/' . $_POST['pseudorec']);
+            foreach ($posts as $post) {
+                if (is_file('./posts/' . $_POST['pseudorec'] . '/' . $post)) {
+                    $datas = file_get_contents('./posts/' . $_POST['pseudorec'] . '/' . $post);
+                    $unserpost = unserialize($datas); {
+                        ?>
                                 <section class="<?php echo $unserpost->getTitre() ?>">
                                     <a href=" postliste.php?id=<?php echo base64_encode(serialize($unserpost)) ?>"><h1><?php echo $unserpost->getTitre() ?></h1></a>
                                     <h2><?php echo $unserpost->getAuteur() ?></h2>
                                     <p><?php echo $unserpost->getContenu() ?></p>
                                     <p><?php echo $unserpost->getDiscipline() ?></p></section>
-                                <?php
-                            }
-                        }
+                        <?php
                     }
                 }
             }
         }
-        ?>
+    }
+}
+?>
         <a href="index.php">Retour</a>
     </body>
 </html>

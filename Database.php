@@ -12,7 +12,32 @@
  * @author rieau
  */
 include_once 'header.php';
+/*
+function myLoader($className){
+    $class = str_replace('\\', '/', $className);
+    require($class . '.php');
+}
 
+spl_autoload_register('myLoader');
+
+use entities\User;
+use entities\Comment;
+use entities\Post;
+
+//try {
+    $db = new PDO('mysql:host=localhost;dbname=event_db', 'cyrille', 'motdepasse');
+    //$query = $db->query('SELECT * FROM ??');
+    //echo $query->fetch()['name'].' ';
+    //$chiens = [];
+    /*while ($ligne = $query->fetch()) {
+        $chien = new entities\SmallDoggo($ligne['name'], $ligne['race'], new DateTime(), false);
+        array_push($chiens, $chien);
+    }
+    var_dump($chiens);
+} catch (PDOException $exception) {
+    echo $exception->getMessage();
+}
+*/
 session_start();
 
 class Database {
@@ -25,7 +50,7 @@ class Database {
 
 
 
-    public static function userCreate($user) {
+    public function userCreate($user) {
 //        if (!is_file('./users/users.txt')) { RAjouter tableau ou donnees seront stockees et serialize ensuite après ajout
 
         if (!is_dir('./users')) {
@@ -57,7 +82,7 @@ class Database {
       }
      */
 
-    public static function commentCreate(Comment $comment, Post $post) {
+    public function commentCreate(Comment $comment, Post $post) {
 //        if (!is_file('./users/users.txt')) { RAjouter tableau ou donnees seront stockees et serialize ensuite après ajout
 
         if (!is_dir('./comment')) {
@@ -89,7 +114,7 @@ class Database {
         }
     }
 
-    public static function postCreate(Post $post) {
+    public function postCreate(Post $post) {
 //        if (!is_file('./users/users.txt')) { RAjouter tableau ou donnees seront stockees et serialize ensuite après ajout
 
         if (!is_dir('./posts')) {
@@ -116,7 +141,7 @@ class Database {
         }
     }
 
-    public static function recupPost() {
+    public function recupPost() {
         $tab = [];
         if (is_dir('./posts')) {
             $users = scandir('./posts');
@@ -138,7 +163,7 @@ class Database {
         return $tab;
     }
 
-    public static function recupUser() {
+    public function recupUser() {
 
         if (is_file('./users/users.bin')) {
             $content = file_get_contents('./users/users.bin');
@@ -147,7 +172,7 @@ class Database {
         }
     }
 
-    public static function recupContent($post) {
+    public function recupContent($post) {
         $tab = [];
         if (is_dir('./comment/' . $post->getDate()->format('d-m-Y H:i:s'))) {
             $commentss = scandir('./comment/' . $post->getDate()->format('d-m-Y H:i:s'));
@@ -169,7 +194,7 @@ class Database {
         return $tab;
     }
 
-    public static function modifCom(Comment $com, Comment $anciencom, Post $post) {
+    public function modifCom(Comment $com, Comment $anciencom, Post $post) {
         if (is_file('./comment/' . ($post->getDate()->format('d-m-Y H:i:s')) . '/' . ($anciencom->getDate()->format('d-m-Y H:i:s'))) . '.bin') {
             $file = fopen('./comment/' . ($post->getDate()->format('d-m-Y H:i:s')) . '/' . ($anciencom->getDate()->format('d-m-Y H:i:s')) . '.bin', 'w+');
             fwrite($file, serialize($com));
@@ -177,7 +202,7 @@ class Database {
         }
     }
 
-    public static function modifPost($user, Post $ancienpost, Post $post) {
+    public function modifPost($user, Post $ancienpost, Post $post) {
         if (is_file('./posts/' . $user . '/' . ($ancienpost->getDate()->format('d-m-Y H:i:s'))) . '.bin') {
             $file = fopen('./posts/' . $user . '/' . ($ancienpost->getDate()->format('d-m-Y H:i:s')) . '.bin', 'w+');
             fwrite($file, serialize($post));
@@ -185,7 +210,7 @@ class Database {
         }
     }
 
-    public static function modifUser(User $olduser, User $newuser) {
+    public function modifUser(User $olduser, User $newuser) {
         $users = Database::recupUser();
                 foreach ($users as $key => $user) {
                     if ($olduser->getPseudo() == $user->getPseudo()) {
@@ -199,7 +224,7 @@ class Database {
 
     }
     
-    public static function deleteUser($post) {
+    public function deleteUser($post) {
         $y = unserialize(base64_decode($post));
         $users = Database::recupUser();
 
@@ -254,5 +279,5 @@ class Database {
   } 
 
 //}
-//
-//header('location:index.php'); */
+
+header('location:index.php'); */

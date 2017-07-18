@@ -6,13 +6,15 @@
  * and open the template in the editor.
  */
 
+namespace entities;
+
 /**
  * Description of Comment
  *
- * 
  * @author rieau
  */
 class Comment {
+   
 
     protected $contenu;
     protected $date;
@@ -76,3 +78,5 @@ function getContenu(){
 
 
 }
+
+
